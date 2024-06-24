@@ -6,6 +6,7 @@ function App() {
     <div className="App">
       안녕하세요 이건모약입니다.
       커밋 테스트
+      mac테스트
     </div>
   );
 }
