@@ -1,14 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+//pages
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
-    <div className="App">
-      안녕하세요 이건모약입니다.
-      커밋 테스트
-      mac테스트
-    </div>
-  );
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+        </Routes>
+      </Router>
+    </>
+  );  
 }
 
 export default App;
