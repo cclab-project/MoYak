@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 const CameraComponent = () => {
-    const videoRef = useRef(null);  // 비디오 엘리먼트를 참조하기 위한 ref
-    const [isCameraOn, setIsCameraOn] = useState(false);  // 카메라 상태를 관리하기 위한 state
+    const videoRef = useRef(null);
+    const [isCameraOn, setIsCameraOn] = useState(false);
 
     useEffect(() => {
         const initCamera = async () => {
