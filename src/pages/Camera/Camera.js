@@ -1,32 +1,33 @@
 import React, { useRef, useState, useEffect } from 'react';
+import './CameraComponent.css'; // CSS 파일을 가져옵니다.
 
 const CameraComponent = () => {
-    const videoRef = useRef(null);  // 비디오 엘리먼트를 참조하기 위한 ref
-    const [isCameraOn, setIsCameraOn] = useState(false);  // 카메라 상태를 관리하기 위한 state
+    const videoRef = useRef(null);
+    const [isCameraOn, setIsCameraOn] = useState(false);
 
     useEffect(() => {
         const initCamera = async () => {
-            if (isCameraOn) {  // 카메라가 켜진 경우에만 스트림을 요청
+            if (isCameraOn) {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: { exact: 'environment' } }  // 후면 카메라 사용
+                        video: { facingMode: { exact: 'environment' } }
                     });
                     if (videoRef.current) {
-                        videoRef.current.srcObject = stream;  // 비디오 엘리먼트에 스트림 설정
+                        videoRef.current.srcObject = stream;
                     }
                 } catch (error) {
-                    console.error("Error accessing camera:", error);  // 에러 처리
+                    console.error("Error accessing camera:", error);
                 }
             } else {
                 if (videoRef.current && videoRef.current.srcObject) {
-                    const tracks = (videoRef.current.srcObject).getTracks();  // 스트림의 트랙을 가져옴
-                    tracks.forEach((track) => track.stop());  // 각 트랙을 중지
-                    videoRef.current.srcObject = null;  // 비디오 엘리먼트의 스트림 해제
+                    const tracks = (videoRef.current.srcObject).getTracks();
+                    tracks.forEach((track) => track.stop());
+                    videoRef.current.srcObject = null;
                 }
             }
         };
 
-        initCamera();  // 카메라 초기화 함수 호출
+        initCamera();
 
         return () => {
             if (videoRef.current && videoRef.current.srcObject) {
@@ -34,16 +35,24 @@ const CameraComponent = () => {
                 tracks.forEach((track) => track.stop());
             }
         };
-    }, [isCameraOn]);  // isCameraOn이 변경될 때마다 effect가 실행
+    }, [isCameraOn]);
 
     const toggleCamera = () => {
-        setIsCameraOn((prevState) => !prevState);  // 카메라 상태 토글
+        setIsCameraOn((prevState) => !prevState);
     };
 
     return (
-        <div>
+        <div className="camera-container">
             <button onClick={toggleCamera}>{isCameraOn ? "Turn Off Camera" : "Turn On Camera"}</button>
-            <video ref={videoRef} autoPlay playsInline />
+            <div className="video-wrapper">
+                <video ref={videoRef} autoPlay playsInline className="video-element" />
+                <div className="grid-overlay">
+                    <div className="vertical-line line-1"></div>
+                    <div className="vertical-line line-2"></div>
+                    <div className="horizontal-line line-1"></div>
+                    <div className="horizontal-line line-2"></div>
+                </div>
+            </div>
         </div>
     );
 };
