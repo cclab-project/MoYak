@@ -1,14 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 const CameraComponent = () => {
-    const videoRef = useRef(null);
-    const [isCameraOn, setIsCameraOn] = useState(false);
+    const videoRef = useRef(null);  // 비디오 엘리먼트를 참조하기 위한 ref
+    const [isCameraOn, setIsCameraOn] = useState(false);  // 카메라 상태를 관리하기 위한 state
 
     useEffect(() => {
         const initCamera = async () => {
             if (isCameraOn) {  // 카메라가 켜진 경우에만 스트림을 요청
                 try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });  // 비디오 스트림 요청
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: { exact: 'environment' } }  // 후면 카메라 사용
+                    });
                     if (videoRef.current) {
                         videoRef.current.srcObject = stream;  // 비디오 엘리먼트에 스트림 설정
                     }
