@@ -1,5 +1,13 @@
+// CameraComponent.js
 import React, { useRef, useState, useEffect } from 'react';
-import './CameraComponent.css'; // CSS 파일을 가져옵니다.
+import {
+    CameraContainer,
+    VideoWrapper,
+    VideoElement,
+    GridOverlay,
+    VerticalLine,
+    HorizontalLine
+} from './style';
 
 const CameraComponent = () => {
     const videoRef = useRef(null);
@@ -42,18 +50,18 @@ const CameraComponent = () => {
     };
 
     return (
-        <div className="camera-container">
+        <CameraContainer>
             <button onClick={toggleCamera}>{isCameraOn ? "Turn Off Camera" : "Turn On Camera"}</button>
-            <div className="video-wrapper">
-                <video ref={videoRef} autoPlay playsInline className="video-element" />
-                <div className="grid-overlay">
-                    <div className="vertical-line line-1"></div>
-                    <div className="vertical-line line-2"></div>
-                    <div className="horizontal-line line-1"></div>
-                    <div className="horizontal-line line-2"></div>
-                </div>
-            </div>
-        </div>
+            <VideoWrapper>
+                <VideoElement ref={videoRef} autoPlay playsInline />
+                <GridOverlay>
+                    <VerticalLine />
+                    <VerticalLine />
+                    <HorizontalLine />
+                    <HorizontalLine />
+                </GridOverlay>
+            </VideoWrapper>
+        </CameraContainer>
     );
 };
 
