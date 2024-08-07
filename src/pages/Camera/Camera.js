@@ -59,10 +59,22 @@ const CameraPage = () => {
         if (!canvasRef.current || !videoRef.current) return;
         const canvas = canvasRef.current;
         const video = videoRef.current;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        const size = Math.min(video.videoWidth, video.videoHeight);
+
+        canvas.width = size;
+        canvas.height = size;
         const context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        context.drawImage(
+            video,
+            (video.videoWidth - size) / 2,
+            (video.videoHeight - size) / 2,
+            size,
+            size,
+            0,
+            0,
+            size,
+            size
+        );
         const imageDataUrl = canvas.toDataURL('image/png');
         navigate('/Preview', { state: { imageDataUrl } });
     };
