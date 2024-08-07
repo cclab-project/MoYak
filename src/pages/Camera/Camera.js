@@ -21,10 +21,23 @@ const CameraPage = () => {
                 });
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
-                    setIsCameraOn(true);  
+                    setIsCameraOn(true);  // 카메라가 성공적으로 켜졌음을 표시
                 }
             } catch (error) {
-                console.error("Error accessing camera:", error);
+                if (error.name === 'OverconstrainedError') {
+                    console.warn("Environment camera not available, switching to default camera.");
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                        if (videoRef.current) {
+                            videoRef.current.srcObject = stream;
+                            setIsCameraOn(true);
+                        }
+                    } catch (error) {
+                        console.error("Error accessing camera:", error);
+                    }
+                } else {
+                    console.error("Error accessing camera:", error);
+                }
             }
         };
 
@@ -35,10 +48,10 @@ const CameraPage = () => {
                 const tracks = (videoRef.current.srcObject).getTracks();
                 tracks.forEach((track) => track.stop());
                 videoRef.current.srcObject = null;
-                setIsCameraOn(false);  
+                setIsCameraOn(false);  // 카메라가 꺼졌음을 표시
             }
         };
-    }, []);  
+    }, []);  // 빈 의존성 배열을 사용하여 페이지가 로드될 때 한 번만 실행
 
     return (
         <CameraContainer>
