@@ -1,3 +1,4 @@
+// style.js
 import styled from 'styled-components';
 
 export const CameraContainer = styled.div`
@@ -10,7 +11,7 @@ export const VideoWrapper = styled.div`
   position: relative;
   width: 100%;
   max-width: 600px;
-  padding-top: 100%; /* 1:1 비율을 유지하기 위해 */
+  padding-top: 100%;
 `;
 
 export const VideoElement = styled.video`
@@ -19,7 +20,7 @@ export const VideoElement = styled.video`
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 비디오가 요소를 꽉 채우도록 */
+  object-fit: cover;
 `;
 
 export const GridOverlay = styled.div`
@@ -35,7 +36,8 @@ export const VerticalLine = styled.div`
   position: absolute;
   width: 2px;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.5); /* 반투명 흰색 */
+  background-color: rgba(255, 255, 255, 0.5); 
+  display: ${(props) => (props.isCameraOn ? 'block' : 'none')};
 
   &:nth-child(1) {
     left: 33.33%;
@@ -50,7 +52,8 @@ export const HorizontalLine = styled.div`
   position: absolute;
   width: 100%;
   height: 2px;
-  background-color: rgba(255, 255, 255, 0.5); /* 반투명 흰색 */
+  background-color: rgba(255, 255, 255, 0.5); 
+  display: ${(props) => (props.isCameraOn ? 'block' : 'none')};
 
   &:nth-child(3) {
     top: 33.33%;
