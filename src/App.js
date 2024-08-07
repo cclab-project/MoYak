@@ -23,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Background><Login /></Background>}></Route>
           <Route path="/Home" element={<Background><Home /></Background>}></Route>
-          <Route path="/Home" element={<Background><Camera /></Background>}></Route>
+          <Route path="/Camera" element={<Background><Camera /></Background>}></Route>
         </Routes>
       </Router>
     </>
