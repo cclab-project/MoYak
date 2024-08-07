@@ -8,34 +8,31 @@ const CameraPage = () => {
         const initCamera = async () => {
             try {
                 let stream;
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                let backCamera = videoDevices.find(device => device.label.toLowerCase().includes('back'));
-
                 const constraints = {
                     video: {
-                        deviceId: backCamera ? { exact: backCamera.deviceId } : undefined
+                        facingMode: { exact: 'environment' }
                     }
                 };
 
-                if (isCameraOn) {
+                try {
                     stream = await navigator.mediaDevices.getUserMedia(constraints);
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
-                    }
-                } else {
-                    if (videoRef.current && videoRef.current.srcObject) {
-                        const tracks = videoRef.current.srcObject.getTracks();
-                        tracks.forEach(track => track.stop());
-                        videoRef.current.srcObject = null;
-                    }
+                } catch (error) {
+                    // If facingMode exact environment is not found, fall back to the default camera
+                    console.warn('후면 카메라를 찾을 수 없습니다. 전면 카메라로 전환합니다.');
+                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                }
+
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
                 }
             } catch (error) {
                 console.error('카메라 접근 에러:', error);
             }
         };
 
-        initCamera();
+        if (isCameraOn) {
+            initCamera();
+        }
 
         return () => {
             if (videoRef.current && videoRef.current.srcObject) {
