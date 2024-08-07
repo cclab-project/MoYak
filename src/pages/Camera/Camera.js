@@ -11,7 +11,6 @@ import {
     OutButton,
     InButton,
     CaptureBox,
-
 } from './style';
 
 const CameraPage = () => {
@@ -19,6 +18,7 @@ const CameraPage = () => {
     const [isCameraOn, setIsCameraOn] = useState(true);
     const canvasRef = useRef(null);
     const navigate = useNavigate();
+
     useEffect(() => {
         const initCamera = async () => {
             try {
@@ -75,8 +75,9 @@ const CameraPage = () => {
             size,
             size
         );
+
         const imageDataUrl = canvas.toDataURL('image/png');
-        navigate('/Preview', { state: { imageDataUrl } });
+        navigate('/preview', { state: { imageDataUrl, size } });
     };
 
     return (
@@ -85,21 +86,20 @@ const CameraPage = () => {
                 <CameraWrapper>
                     <StyledVideo ref={videoRef} autoPlay playsInline />
                     <GridOverlay>
-                        <VerticalLine />
-                        <VerticalLine />
-                        <HorizontalLine />
-                        <HorizontalLine />
+                        <VerticalLine style={{ left: '33.33%' }} />
+                        <VerticalLine style={{ left: '66.66%' }} />
+                        <HorizontalLine style={{ top: '33.33%' }} />
+                        <HorizontalLine style={{ top: '66.66%' }} />
                     </GridOverlay>
                 </CameraWrapper>
                 <canvas ref={canvasRef} style={{ display: 'none' }} />
                 <CaptureContainer>
                     <CaptureBox>
                         <OutButton />
-                        <InButton onClick={captureImage}/>
+                        <InButton onClick={captureImage} />
                     </CaptureBox>
                 </CaptureContainer>
             </CameraContainer>
-            
         </>
     );
 };

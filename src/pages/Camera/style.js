@@ -17,7 +17,7 @@ export const CameraWrapper = styled.div`
     position: relative;
     width: 100%;
     max-width: 100%;
-    padding-top: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
     overflow: hidden;
 `;
 
@@ -43,42 +43,26 @@ export const VerticalLine = styled.div`
     position: absolute;
     width: 2px;
     height: 100%;
-    background-color: rgba(255, 255, 255); 
-
-    &:nth-child(1) {
-        left: 33.33%;
-    }
-
-    &:nth-child(2) {
-        left: 66.66%;
-    }
+    background-color: rgba(255, 255, 255, 0.5);
 `;
 
 export const HorizontalLine = styled.div`
     position: absolute;
     width: 100%;
     height: 2px;
-    background-color: rgba(255, 255, 255);
-
-    &:nth-child(3) {
-      top: 33.33%;
-    }
-
-    &:nth-child(4) {
-      top: 66.66%;
-    }
+    background-color: rgba(255, 255, 255, 0.5);
 `;
 
 export const CaptureContainer = styled.div`
-  margin-top: 30px;
-  user-select: none;
-`
+    margin-top: 30px;
+    user-select: none;
+`;
 
 export const CaptureBox = styled.div`
     position: relative;
     width: 80px;
     height: 80px;
-`
+`;
 
 export const OutButton = styled.img.attrs({
     src: outButton,
@@ -87,7 +71,7 @@ export const OutButton = styled.img.attrs({
     width: 100%;
     height: 100%;
     object-fit: cover;
-`
+`;
 
 export const InButton = styled.img.attrs({
     src: inButton,
@@ -119,4 +103,4 @@ export const InButton = styled.img.attrs({
             height: 64px;
         }
     }
-`
+`;
