@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { detectPill } from '../../components/detectPill';
 
 const PreviewPage = () => {
     const location = useLocation();
@@ -13,10 +14,10 @@ const PreviewPage = () => {
             return;
         }
 
-        const createGridImages = () => {
+        const createGridImages = async () => {
             const img = new Image();
             img.src = imageDataUrl;
-            img.onload = () => {
+            img.onload = async () => {
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 const gridSize = size / 3;
@@ -28,7 +29,20 @@ const PreviewPage = () => {
                         canvas.height = gridSize;
                         context.clearRect(0, 0, gridSize, gridSize);
                         context.drawImage(img, col * gridSize, row * gridSize, gridSize, gridSize, 0, 0, gridSize, gridSize);
-                        images.push(canvas.toDataURL('image/png'));
+
+                        const imageElement = new Image();
+                        imageElement.src = canvas.toDataURL('image/png');
+
+                        const pillDetected = await new Promise((resolve) => {
+                            imageElement.onload = async () => {
+                                const result = await detectPill(imageElement);
+                                resolve(result);
+                            };
+                        });
+
+                        if (pillDetected) {
+                            images.push(canvas.toDataURL('image/png'));
+                        }
                     }
                 }
 
