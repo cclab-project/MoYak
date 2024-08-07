@@ -104,3 +104,18 @@ export const InButton = styled.img.attrs({
         }
     }
 `;
+
+export const BrightnessControl = styled.div`
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="range"] {
+        width: 200px;
+    }
+`;

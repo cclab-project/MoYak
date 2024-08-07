@@ -11,13 +11,15 @@ import {
     OutButton,
     InButton,
     CaptureBox,
+    BrightnessControl,
 } from './style';
 
 const CameraPage = () => {
     const videoRef = useRef(null);
-    const [isCameraOn, setIsCameraOn] = useState(true);
     const canvasRef = useRef(null);
     const navigate = useNavigate();
+    const [isCameraOn, setIsCameraOn] = useState(true);
+    const [brightness, setBrightness] = useState(100); // 기본 밝기 100%
 
     useEffect(() => {
         const initCamera = async () => {
@@ -64,6 +66,7 @@ const CameraPage = () => {
         canvas.width = size;
         canvas.height = size;
         const context = canvas.getContext('2d');
+        context.filter = `brightness(${brightness}%)`;
         context.drawImage(
             video,
             (video.videoWidth - size) / 2,
@@ -84,7 +87,7 @@ const CameraPage = () => {
         <>
             <CameraContainer>
                 <CameraWrapper>
-                    <StyledVideo ref={videoRef} autoPlay playsInline />
+                    <StyledVideo ref={videoRef} autoPlay playsInline style={{ filter: `brightness(${brightness}%)` }} />
                     <GridOverlay>
                         <VerticalLine style={{ left: '33.33%' }} />
                         <VerticalLine style={{ left: '66.66%' }} />
@@ -99,6 +102,16 @@ const CameraPage = () => {
                         <InButton onClick={captureImage} />
                     </CaptureBox>
                 </CaptureContainer>
+                <BrightnessControl>
+                    <label>Brightness</label>
+                    <input
+                        type="range"
+                        min="0"
+                        max="200"
+                        value={brightness}
+                        onChange={(e) => setBrightness(e.target.value)}
+                    />
+                </BrightnessControl>
             </CameraContainer>
         </>
     );
