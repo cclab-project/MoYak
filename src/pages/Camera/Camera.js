@@ -1,29 +1,42 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+    CameraContainer,
+    CameraWrapper,
+    StyledVideo,
+    GridOverlay,
+    VerticalLine,
+    HorizontalLine,
+    CaptureContainer,
+    OutButton,
+    InButton,
+    CaptureBox,
+
+} from './style';
 
 const CameraPage = () => {
     const videoRef = useRef(null);
     const [isCameraOn, setIsCameraOn] = useState(true);
-
+    const canvasRef = useRef(null);
+    const navigate = useNavigate();
     useEffect(() => {
         const initCamera = async () => {
             try {
-                let stream;
                 const constraints = {
-                    video: {
-                        facingMode: { exact: 'environment' }
-                    }
+                    video: { facingMode: { exact: 'environment' } }
                 };
 
                 try {
-                    stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                    }
                 } catch (error) {
-                    // If facingMode exact environment is not found, fall back to the default camera
                     console.warn('후면 카메라를 찾을 수 없습니다. 전면 카메라로 전환합니다.');
-                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                }
-
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream;
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                    }
                 }
             } catch (error) {
                 console.error('카메라 접근 에러:', error);
@@ -42,11 +55,40 @@ const CameraPage = () => {
         };
     }, [isCameraOn]);
 
+    const captureImage = () => {
+        if (!canvasRef.current || !videoRef.current) return;
+        const canvas = canvasRef.current;
+        const video = videoRef.current;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageDataUrl = canvas.toDataURL('image/png');
+        navigate('/Preview', { state: { imageDataUrl } });
+    };
+
     return (
-        <div>
-            <h1>카메라 페이지</h1>
-            <video ref={videoRef} autoPlay playsInline />
-        </div>
+        <>
+            <CameraContainer>
+                <CameraWrapper>
+                    <StyledVideo ref={videoRef} autoPlay playsInline />
+                    <GridOverlay>
+                        <VerticalLine />
+                        <VerticalLine />
+                        <HorizontalLine />
+                        <HorizontalLine />
+                    </GridOverlay>
+                </CameraWrapper>
+                <canvas ref={canvasRef} style={{ display: 'none' }} />
+                <CaptureContainer>
+                    <CaptureBox>
+                        <OutButton />
+                        <InButton onClick={captureImage}/>
+                    </CaptureBox>
+                </CaptureContainer>
+            </CameraContainer>
+            
+        </>
     );
 };
 

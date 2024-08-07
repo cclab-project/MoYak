@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Home from "./pages/Main/Main";
 import Camera from "./pages/Camera/Camera";
+import Preview from './pages/Preview/Preview';
 import GlobalStyle from './Globalstylel';
 import Background from './components/Background/Background';
   
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Background><Login /></Background>}></Route>
           <Route path="/Home" element={<Background><Home /></Background>}></Route>
           <Route path="/Camera" element={<Background><Camera /></Background>}></Route>
+          <Route path="/Preview" element={<Background><Preview /></Background>}></Route>
         </Routes>
       </Router>
     </>
