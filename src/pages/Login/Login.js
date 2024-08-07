@@ -1,10 +1,13 @@
 import React from 'react';
 
+import { LogoBox } from './style';
 const Login = () => {
     return (
-        <div>
-            로그인페이지
-        </div>
+        <>
+            <LogoBox>
+
+            </LogoBox>
+        </>
     );
 };
 
