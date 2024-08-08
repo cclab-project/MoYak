@@ -8,7 +8,10 @@ import Camera from "./pages/Camera/Camera";
 import Preview from './pages/Preview/Preview';
 import GlobalStyle from './Globalstylel';
 import Background from './components/Background/Background';
-  
+
+//redirection
+import KakaoRedirection from "./pages/Redirection/KakaoRedirection/KakaoRedirection"
+
 function App() {
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
