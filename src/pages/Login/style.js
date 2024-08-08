@@ -8,3 +8,7 @@ export const LogoBox = styled.img.attrs({
 })`
     height: 300px;
 `
+
+export const LoginContainer = styled.div`
+    display: flex;
+`
