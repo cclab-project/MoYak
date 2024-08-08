@@ -29,6 +29,7 @@ function App() {
           <Route path="/Home" element={<Background><Home /></Background>}></Route>
           <Route path="/Camera" element={<Background><Camera /></Background>}></Route>
           <Route path="/Preview" element={<Background><Preview /></Background>}></Route>
+          <Route exact path="/kakao/callback" element={<KakaoRedirection />} />
         </Routes>
       </Router>
     </>
