@@ -11,4 +11,5 @@ export const LogoBox = styled.img.attrs({
 
 export const LoginContainer = styled.div`
     display: flex;
+    flex-direction: column;
 `
