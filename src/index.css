@@ -1,8 +1,41 @@
+@font-face {
+  font-family: "sansRegular";
+  src: url(./fonts/NotoSansKR-Regular.ttf);
+}
+@font-face {
+  font-family: "sansMedium";
+  src: url(./fonts/NotoSansKR-Medium.ttf);
+}
+@font-face {
+  font-family: "sansBold";
+  src: url(./fonts/NotoSansKR-Bold.ttf);
+}
+@font-face {
+  font-family: "anboRegular";
+  src: url(./fonts/PTAnbo-Regular.ttf);
+}
+@font-face {
+  font-family: "bandoRegular";
+  src: url(./fonts/PTBando-Regular.ttf);
+}
+@font-face {
+  font-family: "bandoBold";
+  src: url(./fonts/PTBando-Bold.ttf);
+}
+
+:root {
+  --font-sansRegular: "sansRegular";
+  --font-sansMedium: "sansMedium";
+  --font-sansBold: "sansBold";
+  --font-anboRegular: "anboRegular";
+  --font-bandoRegular: "bandoRegular";
+  --font-bandoBold: "bandoBold";
+}
+
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "sansRegular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

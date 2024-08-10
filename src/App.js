@@ -7,7 +7,7 @@ import Home from "./pages/Main/Main";
 import Camera from "./pages/Camera/Camera";
 import Preview from './pages/Preview/Preview';
 import GlobalStyle from './Globalstylel';
-import Background from './components/Background/Background';
+import { Background, BackgroundWhite } from './components/Background/Background';
 
 //redirection
 import KakaoRedirection from "./pages/Redirection/KakaoRedirection/KakaoRedirection"
@@ -25,8 +25,8 @@ function App() {
       <GlobalStyle/>
       <Router>
         <Routes>
-          <Route path="/" element={<Background><Login /></Background>}></Route>
-          <Route path="/Home" element={<Background><Home /></Background>}></Route>
+          <Route path="/" element={<BackgroundWhite><Login /></BackgroundWhite>}></Route>
+          <Route path="/Home" element={<BackgroundWhite><Home /></BackgroundWhite>}></Route>
           <Route path="/Camera" element={<Background><Camera /></Background>}></Route>
           <Route path="/Preview" element={<Background><Preview /></Background>}></Route>
           <Route exact path="/kakao/callback" element={<KakaoRedirection />} />

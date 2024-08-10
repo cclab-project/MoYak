@@ -1,13 +1,22 @@
 import React from 'react';
 
-import { BackgroundImg } from './style';
+import {
+    BackgroundDef,
+    BackgroundWithWhite
+} from './style';
 
-const Background = ({ children }) => {
+export const Background = ({ children }) => {
     return (
-        <BackgroundImg>
+        <BackgroundDef>
             {children}
-        </BackgroundImg>
+        </BackgroundDef>
     );
 };
 
-export default Background;
+export const BackgroundWhite = ({ children }) => {
+    return (
+        <BackgroundWithWhite>
+            {children}
+        </BackgroundWithWhite>
+    );
+};

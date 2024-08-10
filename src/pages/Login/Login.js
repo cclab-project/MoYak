@@ -9,8 +9,11 @@ import google from '../../assets/Login/google.png'
 
 import {
     LogoBox,
+    Logo,
+    LogoName,
     LoginContainer,
     JoinContainer,
+    Description,
     SNSIcon,
 } from './style';
 const Login = () => {
@@ -21,9 +24,16 @@ const Login = () => {
 
         <LoginContainer>
             <LogoBox>
-
+                <Logo />
+                <LogoName>
+                    이건모약
+                </LogoName>
             </LogoBox>
+            <Description>
+                간편 소셜로그인
+            </Description>
             <JoinContainer>
+                
                 <SNSIcon
                     src={kakao}
                     alt='kakao'
