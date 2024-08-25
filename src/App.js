@@ -6,6 +6,8 @@ import Login from "./pages/Login/Login";
 import Home from "./pages/Main/Main";
 import Camera from "./pages/Camera/Camera";
 import Preview from './pages/Preview/Preview';
+import ChatRoom from "./pages/ChatRoom/ChatRoom";
+
 import Socket from './pages/Socket/Socket';
 
 import GlobalStyle from './Globalstylel';
@@ -31,6 +33,7 @@ function App() {
           <Route path="/Home" element={<BackgroundWhite><Home /></BackgroundWhite>}></Route>
           <Route path="/Camera" element={<Background><Camera /></Background>}></Route>
           <Route path="/Preview" element={<Background><Preview /></Background>}></Route>
+          <Route path="/Chatroom" element={<BackgroundWhite><ChatRoom /></BackgroundWhite>}></Route>
           <Route path="/socket" element={<Socket />}></Route>
 
           <Route exact path="/kakao/callback" element={<KakaoRedirection />} />

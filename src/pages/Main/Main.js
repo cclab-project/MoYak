@@ -13,7 +13,7 @@ import {
     Description,
 } from './style';
 
-import ChatRoom from '../../components/ChatRoom/ChatRoom';
+import ChatList from '../../components/ChatList/ChatList';
  
 const Main = () => {
     const navigate = useNavigate();
@@ -44,20 +44,20 @@ const Main = () => {
             <Header>
                 <LogoBox>
                     <Logo />
-                    <LogoName>
+                    <LogoName >
                         이건모약
                     </LogoName>
                 </LogoBox>
             </Header>
             <Body>
-                <NewChat>
+                <NewChat onClick={cameraHandler}>
                     <PlusImg />
                     <Description>
                         새로운 알약 검색
                     </Description>
                 </NewChat>
                 {data.map((item, index) => (
-                    <ChatRoom key={index} item={item} />
+                    <ChatList key={index} item={item} />
                 ))}
 
             </Body>

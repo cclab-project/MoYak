@@ -10,17 +10,17 @@ import {
 } from './style';
 import testImg from '../../assets/testImg.png';
 
-const ChatRoom = ({ item }) => {
+const ChatList = ({ item }) => {
     return (
         <ChatContainer>
-            <ImgBox src={testImg} alt="pillImg"/>
+            <ImgBox src={testImg} alt="pillImg" />
             <DataBox>
                 <Title>
                     {item.title}
                 </Title>
                 <IngredientBox>
                     {item.ingredient.map((ingredientData, index) => (
-                        <IngredientItem>
+                        <IngredientItem key={index}>
                             {ingredientData}
                         </IngredientItem>
                     ))}
@@ -30,4 +30,4 @@ const ChatRoom = ({ item }) => {
     );
 };
 
-export default ChatRoom;
+export default ChatList;
