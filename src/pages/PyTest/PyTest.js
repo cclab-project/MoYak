@@ -24,7 +24,7 @@ function FileUpload() {
 
         try {
             setLoading(true);
-            const response = await axios.post('http://127.0.0.1:5000/predict', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_PYTHON_URL}/predict`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
