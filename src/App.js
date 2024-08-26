@@ -9,6 +9,7 @@ import Preview from './pages/Preview/Preview';
 import ChatRoom from "./pages/ChatRoom/ChatRoom";
 
 import Socket from './pages/Socket/Socket';
+import PyTest from "./pages/PyTest/PyTest";
 
 import GlobalStyle from './Globalstylel';
 import { Background, BackgroundWhite } from './components/Background/Background';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/Preview" element={<Background><Preview /></Background>}></Route>
           <Route path="/Chatroom" element={<BackgroundWhite><ChatRoom /></BackgroundWhite>}></Route>
           <Route path="/socket" element={<Socket />}></Route>
+          <Route path="/pytest" element={<PyTest />}></Route>
 
           <Route exact path="/kakao/callback" element={<KakaoRedirection />} />
         </Routes>
