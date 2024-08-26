@@ -31,6 +31,7 @@ function FileUpload() {
             });
 
             // 서버에서 받은 결과를 저장
+            console.log(response);
             setResults(response.data);
             setLoading(false);
         } catch (error) {
@@ -50,12 +51,12 @@ function FileUpload() {
             </form>
             {(results.length > 0) && (
                 <div>
-                    <h3>Results:</h3>
+                    {/* <h3>Results:</h3>
                     <ul>
                         {results.map((result, index) => (
                             <li key={index}>{result.pillid}, {result.name}, {result.ingredient}</li>
                         ))}
-                    </ul>
+                    </ul> */}
                 </div>
             )}
         </div>
