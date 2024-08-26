@@ -21,6 +21,7 @@ function FileUpload() {
         files.forEach((file, index) => {
             formData.append(`image${index}`, file);
         });
+        formData.append(`chat_id`, '1');
 
         try {
             setLoading(true);
