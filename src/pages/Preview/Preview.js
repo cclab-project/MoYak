@@ -86,12 +86,8 @@ const PreviewPage = () => {
 
 
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-
     const sendPostRequest = async () => {
         setLoading(true);
-        setError(null);
         try {
             const formData_all = new FormData();
             const blob = await fetch(resizedImageDataUrl).then(res => res.blob());
@@ -118,17 +114,14 @@ const PreviewPage = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
-            navigate('/Chatroom', { state: { responseData: response_each.data } });
+            navigate("/chatroom", { state: { responseData: response_each.data } });
 
         } catch (err) {
-            setError(err);
             console.log(err);
+            alert("다시 시도해주세요")
         } finally {
             setLoading(false);
         }
-        
-        
     }
 
     return (

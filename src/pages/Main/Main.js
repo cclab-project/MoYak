@@ -19,7 +19,7 @@ const Main = () => {
     const navigate = useNavigate();
 
     const cameraHandler = () => {
-        navigate("/Camera");
+        navigate("/camera");
     }
     
     const [data, setData] = useState([]);

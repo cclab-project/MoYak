@@ -31,10 +31,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<BackgroundWhite><Login /></BackgroundWhite>}></Route>
-          <Route path="/Home" element={<BackgroundWhite><Home /></BackgroundWhite>}></Route>
-          <Route path="/Camera" element={<Background><Camera /></Background>}></Route>
-          <Route path="/Preview" element={<Background><Preview /></Background>}></Route>
-          <Route path="/Chatroom" element={<BackgroundWhite><ChatRoom /></BackgroundWhite>}></Route>
+          <Route path="/home" element={<BackgroundWhite><Home /></BackgroundWhite>}></Route>
+          <Route path="/camera" element={<Background><Camera /></Background>}></Route>
+          <Route path="/preview" element={<Background><Preview /></Background>}></Route>
+          <Route path="/chatroom" element={<BackgroundWhite><ChatRoom /></BackgroundWhite>}></Route>
           <Route path="/socket" element={<Socket />}></Route>
           <Route path="/pytest" element={<PyTest />}></Route>
 
