@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import {
     Header,
@@ -8,6 +9,8 @@ import {
 } from './style';
 
 const ChatRoom = () => {
+    const location = useLocation();
+    const { responseData } = location.state || {};
     const chatex = [
         {
             sender: '1',
@@ -27,7 +30,7 @@ const ChatRoom = () => {
             <Header>
                 <BackButton />
                 <HeaderTitle>
-                    제목목
+                    채팅방 번호: {responseData}
                 </HeaderTitle>
                 <MenuButton />
             </Header>

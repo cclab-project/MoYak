@@ -103,12 +103,9 @@ const PreviewPage = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
             const chat_id = response_all.data;
-            console.log(response_all);
 
             const formData_each = new FormData();
-
             for (let i = 0; i < gridImages.length; i++) {
                 const blob = await fetch(gridImages[i]).then(res => res.blob());
                 formData_each.append(`image${i}`, blob, `image${i}.png`);
@@ -122,10 +119,11 @@ const PreviewPage = () => {
                 },
             });
 
-            console.log(response_each);
+            navigate('/Chatroom', { state: { responseData: response_each.data } });
 
         } catch (err) {
             setError(err);
+            console.log(err);
         } finally {
             setLoading(false);
         }
@@ -152,7 +150,7 @@ const PreviewPage = () => {
             <button onClick={() => navigate('/camera')}>사진 다시 찍기</button>
             {loading && (
                 <ModalPortal>
-                    <PreviewLoading />
+                    <PreviewLoading show={loading}/>
                 </ModalPortal>
             )}
         </div>
