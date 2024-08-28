@@ -114,7 +114,8 @@ const PreviewPage = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            navigate("/chatroom", { state: { responseData: response_each.data } });
+            console.log(response_each);
+            navigate("/chatroom", { state: { responseData: response_each.data.chat_id } });
 
         } catch (err) {
             console.log(err);
@@ -126,13 +127,6 @@ const PreviewPage = () => {
 
     return (
         <div style={{ textAlign: 'center' }}>
-            {/* <h1>Preview</h1>
-            {resizedImageDataUrl && (
-                <div>
-                    <h2>Resized Image</h2>
-                    <img src={resizedImageDataUrl} alt="Resized" style={{ width: '90px', height: '90px' }} />
-                </div>
-            )} */}
             <h2>알약을 {gridImages.length}개 발견하였습니다</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
                 {gridImages.map((src, index) => (
