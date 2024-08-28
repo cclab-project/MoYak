@@ -3,12 +3,17 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import {
+    ChatContainer,
     Header,
     BackButton,
     MenuButton,
     HeaderTitle,
     Body,
     Bottom,
+    InputContainer,
+    InputBox,
+    SendBox,
+    SendImg,
 } from './style';
 
 import LoadingDots from '../../components/Loading/LoadingDot';
@@ -18,6 +23,11 @@ const ChatRoom = () => {
     const { responseData } = location.state || {};
     const [data, setData] = useState([]);
     useEffect(() => {
+        if (!responseData) {
+            alert("responseData가 정의되지 않았습니다.");
+            return;
+        }
+
         const sendPostRequest = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
@@ -30,6 +40,22 @@ const ChatRoom = () => {
         // 컴포넌트 마운트 시 POST 요청 실행
         sendPostRequest();
     }, []);
+
+    //키보드에 맞춰 화면 높이 계산
+    const [bodyHeight, setBodyHeight] = useState(window.innerHeight - 100);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setBodyHeight(window.innerHeight - 100);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const chatex = [
         {
             sender: '1',
@@ -45,7 +71,7 @@ const ChatRoom = () => {
         },
     ]
     return (
-        <>
+        <ChatContainer>
             <Header>
                 <BackButton />
                 <HeaderTitle>
@@ -53,13 +79,19 @@ const ChatRoom = () => {
                 </HeaderTitle>
                 <MenuButton />
             </Header>
-            <Body>
+            <Body $height={bodyHeight}>
                 <LoadingDots />
+                
             </Body>
             <Bottom>
-                
+                <InputContainer>
+                    <InputBox type='text'/>
+                </InputContainer>
+                <SendBox>
+                    <SendImg/>
+                </SendBox>
             </Bottom>
-        </>
+        </ChatContainer>
     );
 };
 

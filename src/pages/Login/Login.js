@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //link
 import { KAKAO_LINK } from '../../config/config';
@@ -17,6 +18,7 @@ import {
     SNSIcon,
 } from './style';
 const Login = () => {
+    const navigate = useNavigate();
     const kakaoLoginHandler = () => {
         window.location.href = KAKAO_LINK;
     };
@@ -39,7 +41,11 @@ const Login = () => {
                     alt='kakao'
                     onClick={kakaoLoginHandler}
                 />
-                <SNSIcon src={google} alt='google' />
+                <SNSIcon
+                    src={google}
+                    alt='google'
+                    onClick={() => navigate('/chatroom')}
+                />
             </JoinContainer>
 
         </LoginContainer>
