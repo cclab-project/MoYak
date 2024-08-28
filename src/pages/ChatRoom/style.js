@@ -36,3 +36,11 @@ export const MenuButton = styled.img.attrs({
     width: 36px;
     height: 36px;
 `
+
+export const Body = styled.div` 
+    margin-top: 15px;
+`
+
+export const Bottom = styled.div`
+
+`

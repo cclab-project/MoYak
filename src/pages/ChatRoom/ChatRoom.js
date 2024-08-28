@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 import {
     Header,
     BackButton,
     MenuButton,
     HeaderTitle,
+    Body,
+    Bottom,
 } from './style';
+
+import LoadingDots from '../../components/Loading/LoadingDot';
 
 const ChatRoom = () => {
     const location = useLocation();
     const { responseData } = location.state || {};
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const sendPostRequest = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
+                setData(response.data);  
+            } catch (err) {
+                console.log(err)
+            }
+        };
+
+        // 컴포넌트 마운트 시 POST 요청 실행
+        sendPostRequest();
+    }, []);
     const chatex = [
         {
             sender: '1',
@@ -34,7 +53,12 @@ const ChatRoom = () => {
                 </HeaderTitle>
                 <MenuButton />
             </Header>
-            
+            <Body>
+                <LoadingDots />
+            </Body>
+            <Bottom>
+                
+            </Bottom>
         </>
     );
 };

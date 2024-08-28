@@ -86,7 +86,7 @@ const PreviewPage = () => {
 
 
     const [loading, setLoading] = useState(false);
-    const sendPostRequest = async () => {
+    const sendPillImg = async () => {
         setLoading(true);
         try {
             const formData_all = new FormData();
@@ -139,7 +139,7 @@ const PreviewPage = () => {
                     <img key={index} src={src} alt={`Grid ${index}`} style={{ width: '100%', height: 'auto' }} />
                 ))}
             </div>
-            <button onClick={sendPostRequest}>이 알약들로 질문할래요</button><br />
+            <button onClick={sendPillImg}>이 알약들로 질문할래요</button><br />
             <button onClick={() => navigate('/camera')}>사진 다시 찍기</button>
             {loading && (
                 <ModalPortal>
