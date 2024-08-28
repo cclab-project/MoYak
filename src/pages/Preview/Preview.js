@@ -3,6 +3,10 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { detectPill } from '../../components/detectPill';
 
+//modat
+import ModalPortal from '../../modal/ModalPortal';
+import PreviewLoading from '../../components/Loading/PreviewLoading';
+
 const PreviewPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -90,23 +94,45 @@ const PreviewPage = () => {
         setError(null);
         try {
             //blob으로 변환 후 formData로 넣기
-            const formData = new FormData();
+            const formData_all = new FormData();
             const blob = await fetch(resizedImageDataUrl).then(res => res.blob());
-            formData.append('all_image', blob, 'all_image.png');
-
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/create`, formData, {
+            formData_all.append('all_image', blob, 'all_image.png');
+            //첫번째 요청
+            const response_all = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/create`, formData_all, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+            if (!response_all.ok) {
+                throw new Error('첫 번째 요청이 실패했습니다.');
+            }
+            const chat_id = await response_all.data;
+            console.log(response_all);
 
-            setData(response.data); 
-            console.log(response);
+            const formData_each = new FormData();
+
+            // gridImages에 저장된 각 이미지를 Blob으로 변환하여 FormData에 추가
+            for (let i = 0; i < gridImages.length; i++) {
+                const blob = await fetch(gridImages[i]).then(res => res.blob());
+                formData_each.append(`image${i}`, blob, `image${i}.png`);
+            }
+            formData_each.append('chat_id', chat_id);  
+            
+            //두번째 요청
+            const response_each = await axios.post(`${process.env.REACT_APP_PYTHON_URL}/predict`, formData_each, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(response_each);
+
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
+        
+        
     }
 
     return (
@@ -126,6 +152,11 @@ const PreviewPage = () => {
             </div>
             <button onClick={sendPostRequest}>이 알약들로 질문할래요</button><br />
             <button onClick={() => navigate('/camera')}>사진 다시 찍기</button>
+            {loading && (
+                <ModalPortal>
+                    <PreviewLoading />
+                </ModalPortal>
+            )}
         </div>
     );
 };
