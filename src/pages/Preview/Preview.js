@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { detectPill } from '../../components/detectPill';
 
@@ -28,8 +29,8 @@ const PreviewPage = () => {
             const img = new Image();
             img.src = imageDataUrl;
             img.onload = async () => {
-                // 이미지를 90x90 크기로 조정
-                const targetSize = 90;
+                // 이미지를 250x250 크기로 조정
+                const targetSize = 250;
                 const resizedUrl = resizeImage(img, targetSize);
                 setResizedImageDataUrl(resizedUrl);
 
@@ -79,26 +80,52 @@ const PreviewPage = () => {
         createGridImages();
     }, [imageDataUrl, navigate]);
 
-    if (!imageDataUrl) {
-        return null;
+
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+
+    const sendPostRequest = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            //blob으로 변환 후 formData로 넣기
+            const formData = new FormData();
+            const blob = await fetch(resizedImageDataUrl).then(res => res.blob());
+            formData.append('all_image', blob, 'all_image.png');
+
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/create`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            setData(response.data); 
+            console.log(response);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
         <div style={{ textAlign: 'center' }}>
-            <h1>Preview</h1>
+            {/* <h1>Preview</h1>
             {resizedImageDataUrl && (
                 <div>
                     <h2>Resized Image</h2>
                     <img src={resizedImageDataUrl} alt="Resized" style={{ width: '90px', height: '90px' }} />
                 </div>
-            )}
-            <h2>Grid Images</h2>
+            )} */}
+            <h2>알약을 {gridImages.length}개 발견하였습니다</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px' }}>
                 {gridImages.map((src, index) => (
                     <img key={index} src={src} alt={`Grid ${index}`} style={{ width: '100%', height: 'auto' }} />
                 ))}
             </div>
-            <button onClick={() => navigate('/')}>Go Home</button>
+            <button onClick={sendPostRequest}>이 알약들로 질문할래요</button><br />
+            <button onClick={() => navigate('/camera')}>사진 다시 찍기</button>
         </div>
     );
 };
