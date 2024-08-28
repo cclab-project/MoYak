@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import testImg from '../../assets/testImg.png'
 
 import {
-    ChatContainer,
     Header,
     BackButton,
     MenuButton,
     HeaderTitle,
     Body,
+    MoyakImg,
+    PillImgBox,
+    PillImg,
+    PillName,
+    PillIngredient,
+    LeftSpeechBubble,
+    RightSpeechBubble,
+    TextBox,
     Bottom,
     InputContainer,
     InputBox,
     SendBox,
     SendImg,
+
+
 } from './style';
 
 import LoadingDots from '../../components/Loading/LoadingDot';
@@ -31,7 +41,8 @@ const ChatRoom = () => {
         const sendPostRequest = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
-                setData(response.data);  
+                setData(response.data); 
+                console.log(response.data);
             } catch (err) {
                 console.log(err)
             }
@@ -42,11 +53,11 @@ const ChatRoom = () => {
     }, []);
 
     //키보드에 맞춰 화면 높이 계산
-    const [bodyHeight, setBodyHeight] = useState(window.innerHeight - 100);
+    const [bodyHeight, setBodyHeight] = useState(window.innerHeight - 110);
 
     useEffect(() => {
         const handleResize = () => {
-            setBodyHeight(window.innerHeight - 100);
+            setBodyHeight(window.innerHeight - 110);
         };
 
         window.addEventListener('resize', handleResize);
@@ -55,6 +66,23 @@ const ChatRoom = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+    const chatImg = [
+        {
+            image: testImg,
+            pill_name: '티파스정',
+            pill_ingredient: 'Tiropramide Hydrochloride 100mg',
+        },
+        {
+            image: testImg,
+            pill_name: '트리원정',
+            pill_ingredient: 'Trimebutine Maleate 100mg',
+        },
+        {
+            image: testImg,
+            pill_name: '하이퍼셋세미정',
+            pill_ingredient: 'Acetaminophen 162.5mg Tramadol,Hydrochloride 18.75mg',
+        }
+    ]
 
     const chatex = [
         {
@@ -71,7 +99,7 @@ const ChatRoom = () => {
         },
     ]
     return (
-        <ChatContainer>
+        <>
             <Header>
                 <BackButton />
                 <HeaderTitle>
@@ -80,18 +108,57 @@ const ChatRoom = () => {
                 <MenuButton />
             </Header>
             <Body $height={bodyHeight}>
-                <LoadingDots />
-                
+                <LeftSpeechBubble>
+                    <MoyakImg />
+                    <TextBox>
+                        {chatImg.map((list, index) => (
+                            <PillImgBox key={index}>
+                                <PillImg src={list.image} alt="testImg" />
+                                <PillName>
+                                    {list.pill_name}
+                                    <PillIngredient>
+                                        {list.pill_ingredient}
+                                    </PillIngredient>
+                                </PillName>
+                            </PillImgBox>
+                        ))}
+                    </TextBox>
+                </LeftSpeechBubble>
+                <RightSpeechBubble>
+                    <TextBox>
+                        사용자가 대답중입니다.
+                    </TextBox>
+                </RightSpeechBubble>
+                <LeftSpeechBubble>
+                    <MoyakImg />
+                    <TextBox>
+                        gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.
+                    </TextBox>
+                </LeftSpeechBubble>
+                <RightSpeechBubble>
+                    <TextBox>
+                        사용자가 대답중입니다.
+                    </TextBox>
+                </RightSpeechBubble>
+                <LeftSpeechBubble>
+                    <MoyakImg />
+                    <TextBox>
+                        <LoadingDots />
+                    </TextBox>
+                </LeftSpeechBubble>
             </Body>
             <Bottom>
                 <InputContainer>
-                    <InputBox type='text'/>
+                    <InputBox
+                        type='text'
+                        placeholder="질문을 입력하세요"
+                    />
                 </InputContainer>
                 <SendBox>
-                    <SendImg/>
+                    <SendImg />
                 </SendBox>
             </Bottom>
-        </ChatContainer>
+        </>
     );
 };
 
