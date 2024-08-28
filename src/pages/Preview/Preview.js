@@ -93,37 +93,35 @@ const PreviewPage = () => {
         setLoading(true);
         setError(null);
         try {
-            //blob으로 변환 후 formData로 넣기
             const formData_all = new FormData();
             const blob = await fetch(resizedImageDataUrl).then(res => res.blob());
             formData_all.append('all_image', blob, 'all_image.png');
-            //첫번째 요청
+
+            // 첫 번째 요청
             const response_all = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/create`, formData_all, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            if (!response_all.ok) {
-                throw new Error('첫 번째 요청이 실패했습니다.');
-            }
-            const chat_id = await response_all.data;
+
+            const chat_id = response_all.data;
             console.log(response_all);
 
             const formData_each = new FormData();
 
-            // gridImages에 저장된 각 이미지를 Blob으로 변환하여 FormData에 추가
             for (let i = 0; i < gridImages.length; i++) {
                 const blob = await fetch(gridImages[i]).then(res => res.blob());
                 formData_each.append(`image${i}`, blob, `image${i}.png`);
             }
-            formData_each.append('chat_id', chat_id);  
-            
-            //두번째 요청
+            formData_each.append('chat_id', chat_id);
+
+            // 두 번째 요청
             const response_each = await axios.post(`${process.env.REACT_APP_PYTHON_URL}/predict`, formData_each, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+
             console.log(response_each);
 
         } catch (err) {
