@@ -22,8 +22,6 @@ import {
     InputBox,
     SendBox,
     SendImg,
-
-
 } from './style';
 
 import LoadingDots from '../../components/Loading/LoadingDot';
@@ -41,8 +39,8 @@ const ChatRoom = () => {
         const sendPostRequest = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
-                setData(response.data); 
-                console.log(response.data);
+                setData(response.data.eachPills); 
+                console.log(response.data.eachPills);
             } catch (err) {
                 console.log(err)
             }
@@ -111,7 +109,7 @@ const ChatRoom = () => {
                 <LeftSpeechBubble>
                     <MoyakImg />
                     <TextBox>
-                        {chatImg.map((list, index) => (
+                        {data.map((list, index) => (
                             <PillImgBox key={index}>
                                 <PillImg src={list.image} alt="testImg" />
                                 <PillName>
