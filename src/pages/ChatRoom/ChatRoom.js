@@ -122,22 +122,25 @@ const ChatRoom = () => {
                         ))}
                     </TextBox>
                 </LeftSpeechBubble>
-                <RightSpeechBubble>
-                    <TextBox>
-                        사용자가 대답중입니다.
-                    </TextBox>
-                </RightSpeechBubble>
-                <LeftSpeechBubble>
-                    <MoyakImg />
-                    <TextBox>
-                        gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.gpt가 대답중입니다.
-                    </TextBox>
-                </LeftSpeechBubble>
-                <RightSpeechBubble>
-                    <TextBox>
-                        사용자가 대답중입니다.
-                    </TextBox>
-                </RightSpeechBubble>
+                {chatex.map((list, key) => (
+                    <div key={key}>
+                        {list.sender === '0' && (
+                            <LeftSpeechBubble>
+                                <MoyakImg />
+                                <TextBox>
+                                    {list.content}
+                                </TextBox>
+                            </LeftSpeechBubble>
+                        )}
+                        {list.sender === '1' && (
+                            <RightSpeechBubble>
+                                <TextBox>
+                                    {list.content}
+                                </TextBox>
+                            </RightSpeechBubble>
+                        )}
+                    </div>
+                ))}
                 <LeftSpeechBubble>
                     <MoyakImg />
                     <TextBox>
