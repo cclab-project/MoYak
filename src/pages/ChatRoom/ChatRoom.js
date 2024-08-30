@@ -83,7 +83,8 @@ const ChatRoom = () => {
     // ]
 
     //gpt질문하기
-    const [text, setText] = useState('');  
+    const [inputText, setInputText] = useState(''); 
+    const [questionText, setQuestionText] = useState(''); 
     const [questionData, setQuestionData] = useState('');
     const [questionLoding, setQuestionLoding] = useState(false);
     const [chatHistory, setChatHistory] = useState([]);
@@ -94,12 +95,12 @@ const ChatRoom = () => {
         setQuestionLoding(true);
         addItem({
             sender: '1',
-            content: text,
+            content: inputText,
         },);
         setText('');
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`, {
-                question: chatHistory[chatHistory.length - 1].content
+                question: questionText
             });
             setQuestionData(response.data);
             console.log(response.data);
@@ -172,8 +173,11 @@ const ChatRoom = () => {
                     <InputBox
                         type='text'
                         placeholder="질문을 입력하세요"
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        value={inputText}
+                        onChange={(e) => {
+                            setInputText(e.target.value);
+                            setQuestionText(e.target.value);
+                        }}
                     />
                 </InputContainer>
                 <SendBox onClick={QuestionRequest} $disable={questionLoding}>
