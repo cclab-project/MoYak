@@ -86,7 +86,7 @@ const ChatRoom = () => {
             });
             setQuestionData(response.data);
             console.log(response.data);
-            addItem(response.data.message);
+            addItem(response.data);
         }
         catch(err) {
             console.log(err)
