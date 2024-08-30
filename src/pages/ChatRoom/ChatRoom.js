@@ -64,23 +64,40 @@ const ChatRoom = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-    const chatImg = [
-        {
-            image: testImg,
-            pill_name: '티파스정',
-            pill_ingredient: 'Tiropramide Hydrochloride 100mg',
-        },
-        {
-            image: testImg,
-            pill_name: '트리원정',
-            pill_ingredient: 'Trimebutine Maleate 100mg',
-        },
-        {
-            image: testImg,
-            pill_name: '하이퍼셋세미정',
-            pill_ingredient: 'Acetaminophen 162.5mg Tramadol,Hydrochloride 18.75mg',
+    // const chatImg = [
+    //     {
+    //         image: testImg,
+    //         pill_name: '티파스정',
+    //         pill_ingredient: 'Tiropramide Hydrochloride 100mg',
+    //     },
+    //     {
+    //         image: testImg,
+    //         pill_name: '트리원정',
+    //         pill_ingredient: 'Trimebutine Maleate 100mg',
+    //     },
+    //     {
+    //         image: testImg,
+    //         pill_name: '하이퍼셋세미정',
+    //         pill_ingredient: 'Acetaminophen 162.5mg Tramadol,Hydrochloride 18.75mg',
+    //     }
+    // ]
+
+    const [questionData, setQuestionData] = useState('');
+    const [questionLoding, setQuestionLoding] = useState(false);
+    const QuestionRequest = async () => {
+        setQuestionLoding(true);
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
+            setQuestionData(response.data);
+            console.log(response.data)
         }
-    ]
+        catch(err) {
+            console.log(err)
+        }
+        finally {
+            setQuestionLoding(false);
+        }
+    }
 
     const chatex = [
         {
