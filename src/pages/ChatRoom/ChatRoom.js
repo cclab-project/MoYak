@@ -176,7 +176,7 @@ const ChatRoom = () => {
                         onChange={(e) => setText(e.target.value)}
                     />
                 </InputContainer>
-                <SendBox onClick={QuestionRequest}>
+                <SendBox onClick={QuestionRequest} $disable={questionLoding}>
                     <SendImg />
                 </SendBox>
             </Bottom>

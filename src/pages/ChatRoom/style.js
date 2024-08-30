@@ -98,6 +98,7 @@ export const SendBox = styled.div`
     margin-right: 10px;
     background-color: white;
     border-radius: 5px;
+    pointer-events: ${(props) => (props.$disabled ? 'none' : 'auto')};
 `
 
 export const SendImg = styled.img.attrs({
