@@ -40,7 +40,6 @@ const ChatRoom = () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
                 setData(response.data.eachPills); 
-                console.log(response.data.eachPills);
             } catch (err) {
                 console.log(err)
             }
@@ -64,23 +63,6 @@ const ChatRoom = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
-    // const chatImg = [
-    //     {
-    //         image: testImg,
-    //         pill_name: '티파스정',
-    //         pill_ingredient: 'Tiropramide Hydrochloride 100mg',
-    //     },
-    //     {
-    //         image: testImg,
-    //         pill_name: '트리원정',
-    //         pill_ingredient: 'Trimebutine Maleate 100mg',
-    //     },
-    //     {
-    //         image: testImg,
-    //         pill_name: '하이퍼셋세미정',
-    //         pill_ingredient: 'Acetaminophen 162.5mg Tramadol,Hydrochloride 18.75mg',
-    //     }
-    // ]
 
     //gpt질문하기
     const [inputText, setInputText] = useState(''); 
@@ -98,14 +80,13 @@ const ChatRoom = () => {
             content: inputText,
         },);
         setInputText('');
-        console.log(questionText);
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`, {
                 question: questionText
             });
             setQuestionData(response.data);
             console.log(response.data);
-            addItem(response.data.choices.message);
+            addItem(response.data.message);
         }
         catch(err) {
             console.log(err)
