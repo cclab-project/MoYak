@@ -82,14 +82,26 @@ const ChatRoom = () => {
     //     }
     // ]
 
+    //gpt질문하기
+    const [text, setText] = useState('');  
     const [questionData, setQuestionData] = useState('');
     const [questionLoding, setQuestionLoding] = useState(false);
+    const [chatHistory, setChatHistory] = useState([]);
+    const addItem = (newItem) => {
+        setItems(prevItems => [...prevItems, newItem]); 
+    };
     const QuestionRequest = async () => {
         setQuestionLoding(true);
+        addItem({
+            sender: '1',
+            content: text,
+        },);
+        setText('');
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`);
             setQuestionData(response.data);
-            console.log(response.data)
+            console.log(response.data);
+            addItem(response.data);
         }
         catch(err) {
             console.log(err)
@@ -139,7 +151,7 @@ const ChatRoom = () => {
                         ))}
                     </TextBox>
                 </LeftSpeechBubble>
-                {chatex.map((list, key) => (
+                {chatHistory.map((list, key) => (
                     <div key={key}>
                         {list.sender === '0' && (
                             <LeftSpeechBubble>
@@ -158,21 +170,25 @@ const ChatRoom = () => {
                         )}
                     </div>
                 ))}
-                <LeftSpeechBubble>
-                    <MoyakImg />
-                    <TextBox>
-                        <LoadingDots />
-                    </TextBox>
-                </LeftSpeechBubble>
+                {questionLoding && 
+                    <LeftSpeechBubble>
+                        <MoyakImg />
+                        <TextBox>
+                            <LoadingDots />
+                        </TextBox>
+                    </LeftSpeechBubble>
+                }
             </Body>
             <Bottom>
                 <InputContainer>
                     <InputBox
                         type='text'
                         placeholder="질문을 입력하세요"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
                     />
                 </InputContainer>
-                <SendBox>
+                <SendBox onClick={QuestionRequest}>
                     <SendImg />
                 </SendBox>
             </Bottom>
