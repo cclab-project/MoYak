@@ -94,17 +94,18 @@ const ChatRoom = () => {
     const QuestionRequest = async () => {
         setQuestionLoding(true);
         addItem({
-            sender: '1',
+            role: 'user',
             content: inputText,
         },);
         setInputText('');
+        console.log(questionText);
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`, {
                 question: questionText
             });
             setQuestionData(response.data);
             console.log(response.data);
-            addItem(response.data);
+            addItem(response.data.choices.message);
         }
         catch(err) {
             console.log(err)
@@ -142,7 +143,7 @@ const ChatRoom = () => {
                 </LeftSpeechBubble>
                 {chatHistory.map((list, key) => (
                     <div key={key}>
-                        {list.sender === '0' && (
+                        {list.role === 'assistant' && (
                             <LeftSpeechBubble>
                                 <MoyakImg />
                                 <TextBox>
@@ -150,7 +151,7 @@ const ChatRoom = () => {
                                 </TextBox>
                             </LeftSpeechBubble>
                         )}
-                        {list.sender === '1' && (
+                        {list.role === 'user' && (
                             <RightSpeechBubble>
                                 <TextBox>
                                     {list.content}
