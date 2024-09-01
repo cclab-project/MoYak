@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import testImg from '../../assets/testImg.png'
 
@@ -27,12 +27,14 @@ import {
 import LoadingDots from '../../components/Loading/LoadingDot';
 
 const ChatRoom = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const { responseData } = location.state || {};
     const [data, setData] = useState([]);
     useEffect(() => {
         if (!responseData) {
-            alert("responseData가 정의되지 않았습니다.");
+            // alert("다시 시도해주세요.");
+            // navigate("/camera");
             return;
         }
 
@@ -101,7 +103,7 @@ const ChatRoom = () => {
             <Header>
                 <BackButton />
                 <HeaderTitle>
-                    채팅방 번호: {responseData}
+                    {data.title}
                 </HeaderTitle>
                 <MenuButton />
             </Header>
