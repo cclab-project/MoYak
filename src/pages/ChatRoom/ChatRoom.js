@@ -33,7 +33,7 @@ const ChatRoom = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     if (!responseData) {
-      // alert("다시 시도해주세요.");
+      alert("다시 시도해주세요.");
       // navigate("/camera");
       return;
     }
@@ -49,7 +49,6 @@ const ChatRoom = () => {
       }
     };
 
-    // 컴포넌트 마운트 시 POST 요청 실행
     sendPostRequest();
   }, []);
 
