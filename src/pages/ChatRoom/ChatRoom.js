@@ -261,7 +261,7 @@ const ChatRoom = () => {
       >
         <InputBox
           type="text"
-          placeholder="제목을 입력하세요"
+          placeholder="수정할 제목을 입력하세요"
           value={isEditTitle}
           onChange={(e) => {
             setIsEditTitle(e.target.value);
