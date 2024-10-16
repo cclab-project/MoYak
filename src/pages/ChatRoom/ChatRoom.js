@@ -197,8 +197,8 @@ const ChatRoom = () => {
               <PillImgBox key={index}>
                 <PillImg src={list.image} alt="testImg" />
                 <PillName>
-                  {list.pill_name}
-                  <PillIngredient>{list.pill_ingredient}</PillIngredient>
+                  {list.pillName}
+                  <PillIngredient>{list.pillIngredient}</PillIngredient>
                 </PillName>
               </PillImgBox>
             ))}
