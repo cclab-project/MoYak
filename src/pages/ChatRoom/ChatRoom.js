@@ -33,26 +33,6 @@ const ChatRoom = () => {
   const location = useLocation();
   const { responseData } = location.state || {};
   const [data, setData] = useState([]);
-  useEffect(() => {
-    if (!responseData) {
-      alert("다시 시도해주세요.");
-      // navigate("/camera");
-      return;
-    }
-
-    const sendPostRequest = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`
-        );
-        setData(response.data.eachPills);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    sendPostRequest();
-  }, []);
 
   const [bodyHeight, setBodyHeight] = useState(window.innerHeight - 110);
 
@@ -74,6 +54,29 @@ const ChatRoom = () => {
   const [questionData, setQuestionData] = useState("");
   const [questionLoding, setQuestionLoding] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
+
+  useEffect(() => {
+    if (!responseData) {
+      alert("다시 시도해주세요.");
+      // navigate("/camera");
+      return;
+    }
+
+    const sendPostRequest = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`
+        );
+        setData(response.data.eachPills);
+        setChatHistory(response.data.chatMessages);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    sendPostRequest();
+  }, []);
+
   const addItem = (newItem) => {
     setChatHistory((prevItems) => [...prevItems, newItem]);
   };
