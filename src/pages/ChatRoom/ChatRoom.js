@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { Dropdown, Modal } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 import testImg from "../../assets/testImg.png";
 
 import {
@@ -99,14 +101,95 @@ const ChatRoom = () => {
     }
   };
 
+  const bodyRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (bodyRef.current) {
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory, questionLoding]);
+
+  // 드롭다운 메뉴
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditTitle, setIsEditTitle] = useState("");
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    editChat();
+    setIsModalOpen(false);
+  };
+
+  const editChat = async () => {
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`,
+        {
+          title: isEditTitle,
+        }
+      );
+      alert("채팅 제목이 수정되었습니다.");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setQuestionLoding(false);
+    }
+  };
+
+  const deleteChat = async () => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`
+      );
+      alert("채팅이 삭제되었습니다.");
+      navigate("/home");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setQuestionLoding(false);
+    }
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: "제목 수정",
+    },
+    {
+      key: "2",
+      label: "채팅 삭제",
+    },
+  ];
+
+  const handleMenuClick = (e) => {
+    if (e.key === "1") {
+      // 제목 수정 로직 추가
+    } else if (e.key === "2") {
+      deleteChat();
+    }
+  };
+
   return (
     <>
       <Header>
-        <BackButton />
+        <BackButton onClick={() => navigate("/home")} />
         <HeaderTitle>{data.title}</HeaderTitle>
-        <MenuButton />
+        <Dropdown
+          menu={{ items, onClick: handleMenuClick }}
+          trigger={["click"]}
+        >
+          <MenuButton onClick={(e) => e.preventDefault()}>
+            <MenuOutlined style={{ fontSize: "26px" }} />
+          </MenuButton>
+        </Dropdown>
       </Header>
-      <Body $height={bodyHeight}>
+      <Body $height={bodyHeight} ref={bodyRef}>
         <LeftSpeechBubble>
           <MoyakImg />
           <TextBox>
@@ -119,6 +202,8 @@ const ChatRoom = () => {
                 </PillName>
               </PillImgBox>
             ))}
+            사진에서 발견한 알약들의 이름과 성분입니다. 더 필요한 정보가 있다면
+            질문해주세요.
           </TextBox>
         </LeftSpeechBubble>
         {chatHistory.map((list, key) => (
@@ -155,12 +240,33 @@ const ChatRoom = () => {
               setInputText(e.target.value);
               setQuestionText(e.target.value);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                QuestionRequest();
+              }
+            }}
           />
         </InputContainer>
         <SendBox onClick={QuestionRequest} $disable={questionLoding}>
           <SendImg />
         </SendBox>
       </Bottom>
+
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <InputBox
+          type="text"
+          placeholder="제목을 입력하세요"
+          value={isEditTitle}
+          onChange={(e) => {
+            setIsEditTitle(e.target.value);
+          }}
+        />
+      </Modal>
     </>
   );
 };
