@@ -88,7 +88,7 @@ const ChatRoom = () => {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`,
         {
-          question: questionText,
+          content: questionText,
         }
       );
       setQuestionData(response.data);
