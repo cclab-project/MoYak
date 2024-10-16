@@ -172,7 +172,7 @@ const ChatRoom = () => {
 
   const handleMenuClick = (e) => {
     if (e.key === "1") {
-      // 제목 수정 로직 추가
+      setIsModalOpen(true);
     } else if (e.key === "2") {
       deleteChat();
     }
