@@ -15,7 +15,6 @@ const PreviewPage = () => {
   const { imageDataUrl } = location.state || {};
   const [gridImages, setGridImages] = useState([]);
   const [resizedImageDataUrl, setResizedImageDataUrl] = useState(null);
-
   useEffect(() => {
     if (!imageDataUrl) {
       navigate("/");
@@ -88,12 +87,13 @@ const PreviewPage = () => {
 
   const [loading, setLoading] = useState(false);
   const sendPillImg = async () => {
+    const now = new Date();
     setLoading(true);
     try {
       const formData_all = new FormData();
       const blob = await fetch(resizedImageDataUrl).then((res) => res.blob());
       formData_all.append("all_image", blob, "all_image.png");
-
+      formData_all.append("time", now.toLocaleTimeString());
       // 첫 번째 요청
       const response_all = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/chat/create`,
