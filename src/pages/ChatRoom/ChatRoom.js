@@ -254,6 +254,7 @@ const ChatRoom = () => {
       </Bottom>
 
       <Modal
+        title="제목 수정"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={() => setIsModalOpen(false)}
