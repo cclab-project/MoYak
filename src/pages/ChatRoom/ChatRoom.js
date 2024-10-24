@@ -261,6 +261,8 @@ const ChatRoom = () => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={() => setIsModalOpen(false)}
+        width={400}
+        centered
       >
         <InputBox
           type="text"
