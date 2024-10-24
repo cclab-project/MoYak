@@ -113,7 +113,7 @@ const PreviewPage = () => {
       }
       formData_each.append("chat_id", chat_id);
 
-      // 두 번째 요청
+      // 두 번째 요청입니다
       const response_each = await axios.post(
         `${process.env.REACT_APP_PYTHON_URL}/predict`,
         formData_each,
