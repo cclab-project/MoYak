@@ -12,7 +12,12 @@ import {
   InButton,
   CaptureBox,
   BrightnessControl,
+  HeaderContainer,
+  HeaderTitle,
+  EmptyBox,
 } from "./style";
+
+import { LeftOutlined } from "@ant-design/icons";
 
 const CameraPage = () => {
   const videoRef = useRef(null);
@@ -123,6 +128,19 @@ const CameraPage = () => {
   return (
     <>
       <CameraContainer>
+        <HeaderContainer>
+          <LeftOutlined
+            onClick={() => navigate("/home")}
+            style={{
+              marginLeft: "10px",
+              color: "white",
+              fontSize: "24px",
+            }}
+          />
+          <HeaderTitle>격자 안에 알약을 하나씩 넣어주세요</HeaderTitle>
+          <EmptyBox />
+        </HeaderContainer>
+
         <CameraWrapper>
           <StyledVideo
             ref={videoRef}

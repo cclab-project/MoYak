@@ -8,7 +8,7 @@ import AWS from "aws-sdk";
 import ModalPortal from "../../modal/ModalPortal";
 import PreviewLoading from "../../components/Loading/PreviewLoading";
 
-import { MainContainer, ButtonCss } from "./style";
+import { MainContainer, ButtonCss, ButtonContainer } from "./style";
 
 const PreviewPage = () => {
   const location = useLocation();
@@ -110,7 +110,7 @@ const PreviewPage = () => {
     const s3 = new AWS.S3();
     const params = {
       Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
-      Key: `pills/${fileName}`,
+      Key: `all_image/${fileName}`,
       Body: blob,
       ContentType: "image/png",
     };
@@ -192,9 +192,12 @@ const PreviewPage = () => {
           />
         ))}
       </div>
-      <ButtonCss onClick={sendPillImg}>이 알약들로 질문할래요</ButtonCss>
-      <br />
-      <ButtonCss onClick={() => navigate("/camera")}>사진 다시 찍기</ButtonCss>
+      <ButtonContainer>
+        <ButtonCss onClick={sendPillImg}>이 알약들로 질문할래요</ButtonCss>
+        <ButtonCss onClick={() => navigate("/camera")}>
+          사진 다시 찍기
+        </ButtonCss>
+      </ButtonContainer>
       {loading && (
         <ModalPortal>
           <PreviewLoading show={loading} />

@@ -1,121 +1,145 @@
-import styled from 'styled-components';
-import outButton from '../../assets/Camera/OutButton.svg';
-import inButton from '../../assets/Camera/InButton.svg';
+import styled from "styled-components";
+import outButton from "../../assets/Camera/OutButton.svg";
+import inButton from "../../assets/Camera/InButton.svg";
 
 export const CameraContainer = styled.div`
-    position: relative;
-    width: 100vw;
-    height: calc(var(--vh, 1vh) * 100);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: black;
+  position: relative;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+`;
+
+export const HeaderContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  top: 15px;
+`;
+
+export const HeaderTitle = styled.div`
+  color: white;
+  font-size: 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 5px 10px;
+`;
+
+export const EmptyBox = styled.div`
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
 `;
 
 export const CameraWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    padding-top: 100%; /* 1:1 Aspect Ratio */
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  overflow: hidden;
+  border: 2px solid rgba(199, 199, 199, 1);
 `;
 
 export const StyledVideo = styled.video`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const GridOverlay = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 `;
 
 export const VerticalLine = styled.div`
-    position: absolute;
-    width: 2px;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(199, 199, 199, 1);
 `;
 
 export const HorizontalLine = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(199, 199, 199, 1);
 `;
 
 export const CaptureContainer = styled.div`
-    margin-top: 30px;
-    user-select: none;
+  margin-top: 30px;
+  user-select: none;
 `;
 
 export const CaptureBox = styled.div`
-    position: relative;
-    width: 80px;
-    height: 80px;
+  position: relative;
+  width: 80px;
+  height: 80px;
 `;
 
 export const OutButton = styled.img.attrs({
-    src: outButton,
-    alt: 'OutButton'
+  src: outButton,
+  alt: "OutButton",
 })`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 export const InButton = styled.img.attrs({
-    src: inButton,
-    alt: 'InButton'
+  src: inButton,
+  alt: "InButton",
 })`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 64px;  
-    height: 64px; 
-    transition: width 0.2s ease, height 0.2s ease;
-  
-    &:active {
-      animation: shrink-grow 0.4s ease;
-    }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  transition: width 0.2s ease, height 0.2s ease;
 
-    @keyframes shrink-grow {
-        0% {
-            width: 64px;
-            height: 64px;
-        }
-        50% {
-            width: 62px;  
-            height: 62px; 
-        }
-        100% {
-            width: 64px;
-            height: 64px;
-        }
+  &:active {
+    animation: shrink-grow 0.4s ease;
+  }
+
+  @keyframes shrink-grow {
+    0% {
+      width: 64px;
+      height: 64px;
     }
+    50% {
+      width: 62px;
+      height: 62px;
+    }
+    100% {
+      width: 64px;
+      height: 64px;
+    }
+  }
 `;
 
 export const BrightnessControl = styled.div`
-    margin-top: 20px;
-    text-align: center;
-    color: white;
+  margin-top: 20px;
+  text-align: center;
+  color: white;
 
-    label {
-        display: block;
-        margin-bottom: 5px;
-    }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
 
-    input[type="range"] {
-        width: 200px;
-    }
+  input[type="range"] {
+    width: 200px;
+  }
 `;
