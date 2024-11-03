@@ -89,7 +89,7 @@ const CameraPage = () => {
 
   // 초점 조절 핸들러
   const handleTouchFocus = (event) => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !videoRef.current.srcObject) return;
     const video = videoRef.current;
     const rect = video.getBoundingClientRect();
     const touch = event.touches[0];
@@ -102,9 +102,9 @@ const CameraPage = () => {
 
     // 카메라의 초점 영역을 설정 (모바일 장치에서 지원할 경우)
     const track = video.srcObject.getVideoTracks()[0];
+    if (!track) return;
     const capabilities = track.getCapabilities();
     if (capabilities.focusMode) {
-      const settings = track.getSettings();
       const constraints = {
         advanced: [
           {
