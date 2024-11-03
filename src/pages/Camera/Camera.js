@@ -87,6 +87,39 @@ const CameraPage = () => {
     navigate("/preview", { state: { imageDataUrl, size } });
   };
 
+  // 초점 조절 핸들러
+  const handleTouchFocus = (event) => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    const rect = video.getBoundingClientRect();
+    const touch = event.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    // 비디오의 크기와 터치 좌표를 바탕으로 초점 좌표 계산
+    const focusX = (x / rect.width) * video.videoWidth;
+    const focusY = (y / rect.height) * video.videoHeight;
+
+    // 카메라의 초점 영역을 설정 (모바일 장치에서 지원할 경우)
+    const track = video.srcObject.getVideoTracks()[0];
+    const capabilities = track.getCapabilities();
+    if (capabilities.focusMode) {
+      const settings = track.getSettings();
+      const constraints = {
+        advanced: [
+          {
+            focusMode: "manual",
+            focusPointX: focusX,
+            focusPointY: focusY,
+          },
+        ],
+      };
+      track.applyConstraints(constraints).catch((error) => {
+        console.error("초점 설정 중 오류 발생:", error);
+      });
+    }
+  };
+
   return (
     <>
       <CameraContainer>
@@ -95,6 +128,7 @@ const CameraPage = () => {
             ref={videoRef}
             autoPlay
             playsInline
+            onTouchStart={handleTouchFocus} // 터치로 초점 조절 기능 추가
             style={{ filter: `brightness(${brightness}%)` }}
           />
           <GridOverlay>
