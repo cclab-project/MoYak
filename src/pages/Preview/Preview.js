@@ -92,7 +92,7 @@ const PreviewPage = () => {
     try {
       const formData_all = new FormData();
       const blob = await fetch(resizedImageDataUrl).then((res) => res.blob());
-      formData_all.append("all_image", resizedImageDataUrl, "all_image.png");
+      formData_all.append("all_image", blob, "all_image.png");
       formData_all.append("timeStamp", now.toLocaleTimeString());
       // 첫 번째 요청
       const response_all = await axios.post(
