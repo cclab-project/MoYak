@@ -59,10 +59,7 @@ const CameraPage = () => {
     }
 
     return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const tracks = videoRef.current.srcObject.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
+      stopCamera();
     };
   }, [isCameraOn]);
 
@@ -125,12 +122,25 @@ const CameraPage = () => {
     }
   };
 
+  // 카메라 해제 함수 추가
+  const stopCamera = () => {
+    if (videoRef.current && videoRef.current.srcObject) {
+      const tracks = videoRef.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
+      setIsCameraOn(false);
+    }
+  };
+
   return (
     <>
       <CameraContainer>
         <HeaderContainer>
           <LeftOutlined
-            onClick={() => navigate("/home")}
+            onClick={() => {
+              stopCamera();
+              navigate("/home");
+            }}
             style={{
               marginLeft: "10px",
               color: "white",
@@ -160,7 +170,12 @@ const CameraPage = () => {
         <CaptureContainer>
           <CaptureBox>
             <OutButton />
-            <InButton onClick={captureImage} />
+            <InButton
+              onClick={() => {
+                captureImage();
+                stopCamera();
+              }}
+            />
           </CaptureBox>
         </CaptureContainer>
         <BrightnessControl>
