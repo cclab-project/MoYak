@@ -124,7 +124,7 @@ const PreviewPage = () => {
       // S3에 전체 이미지 업로드
       const allImageUrl = await uploadToS3(
         resizedImageDataUrl,
-        `all_image.png`
+        `all_image_${now.getTime()}.png`
       );
 
       // 첫 번째 요청
