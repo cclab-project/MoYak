@@ -20,36 +20,18 @@ const CameraPage = () => {
   const navigate = useNavigate();
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [brightness, setBrightness] = useState(100); // 기본 밝기 100%
-  const [focusPoint, setFocusPoint] = useState({ x: 0.5, y: 0.5 }); // 초점 위치 상태 추가
 
   useEffect(() => {
     const initCamera = async () => {
       try {
         const constraints = {
-          video: {
-            facingMode: { exact: "environment" },
-            focusMode: "continuous",
-            advanced: [
-              {
-                focusMode: ["continuous", "manual"],
-                focusDistance: { ideal: 0.5 },
-              },
-            ],
-          },
+          video: { facingMode: { exact: "environment" } },
         };
 
         try {
           const stream = await navigator.mediaDevices.getUserMedia(constraints);
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
-          }
-          // 트랙 설정을 위한 변수 저장
-          const videoTrack = stream.getVideoTracks()[0];
-          const capabilities = videoTrack.getCapabilities();
-
-          // 초점 기능 지원 여부 확인
-          if (capabilities.focusDistance || capabilities.focusMode) {
-            console.log("초점 조절 기능이 지원됩니다.");
           }
         } catch (error) {
           console.warn(
@@ -105,36 +87,6 @@ const CameraPage = () => {
     navigate("/preview", { state: { imageDataUrl, size } });
   };
 
-  // 터치 이벤트 핸들러 추가
-  const handleTouchFocus = async (e) => {
-    if (!videoRef.current || !videoRef.current.srcObject) return;
-
-    const videoTrack = videoRef.current.srcObject.getVideoTracks()[0];
-    const capabilities = videoTrack.getCapabilities();
-
-    // 터치 위치 계산
-    const rect = e.target.getBoundingClientRect();
-    const x = (e.touches[0].clientX - rect.left) / rect.width;
-    const y = (e.touches[0].clientY - rect.top) / rect.height;
-
-    setFocusPoint({ x, y });
-
-    if (capabilities.focusMode?.includes("manual")) {
-      try {
-        await videoTrack.applyConstraints({
-          advanced: [
-            {
-              focusMode: "manual",
-              pointOfInterest: { x: x, y: y },
-            },
-          ],
-        });
-      } catch (error) {
-        console.error("초점 설정 실패:", error);
-      }
-    }
-  };
-
   return (
     <>
       <CameraContainer>
@@ -144,7 +96,6 @@ const CameraPage = () => {
             autoPlay
             playsInline
             style={{ filter: `brightness(${brightness}%)` }}
-            onTouchStart={handleTouchFocus}
           />
           <GridOverlay>
             <VerticalLine style={{ left: "33.33%" }} />
