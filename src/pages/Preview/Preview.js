@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { detectPill } from "../../components/detectPill";
+import AWS from "aws-sdk";
 
 //modat
 import ModalPortal from "../../modal/ModalPortal";
@@ -86,22 +87,52 @@ const PreviewPage = () => {
   }, [imageDataUrl, navigate]);
 
   const [loading, setLoading] = useState(false);
+
+  const uploadToS3 = async (base64Data, fileName) => {
+    // base64 데이터에서 실제 바이너리 데이터 추출
+    const base64Content = base64Data.replace(/^data:image\/\w+;base64,/, "");
+    const imageBuffer = Buffer.from(base64Content, "base64");
+
+    AWS.config.update({
+      region: process.env.REACT_APP_AWS_REGION,
+      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+    });
+
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
+      Key: `pills/${fileName}`,
+      Body: imageBuffer,
+      ContentType: "image/png",
+      ContentEncoding: "base64",
+    };
+
+    try {
+      const { Location } = await s3.upload(params).promise();
+      return Location;
+    } catch (error) {
+      console.error("S3 업로드 에러:", error);
+      throw error;
+    }
+  };
+
   const sendPillImg = async () => {
     const now = new Date();
     setLoading(true);
     try {
-      const formData_all = new FormData();
-      const blob = await fetch(resizedImageDataUrl).then((res) => res.blob());
-      formData_all.append("all_image", blob, "all_image.png");
-      formData_all.append("timeStamp", now.toLocaleTimeString());
+      // S3에 전체 이미지 업로드
+      const allImageUrl = await uploadToS3(
+        resizedImageDataUrl,
+        `all_image.png`
+      );
+
       // 첫 번째 요청
       const response_all = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/chat/create`,
-        formData_all,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          all_image_url: allImageUrl,
+          timeStamp: now.toLocaleTimeString(),
         }
       );
       const chat_id = response_all.data;
