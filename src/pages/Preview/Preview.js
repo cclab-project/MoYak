@@ -39,7 +39,7 @@ const PreviewPage = () => {
         const targetSize = 250;
         const resizedUrl = resizeImage(img, targetSize);
         setResizedImageDataUrl(resizedUrl);
-
+        console.log(resizedUrl);
         // 원본 이미지를 3x3 격자로 나누기
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
