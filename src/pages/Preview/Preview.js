@@ -91,7 +91,15 @@ const PreviewPage = () => {
   const uploadToS3 = async (base64Data, fileName) => {
     // base64 데이터에서 실제 바이너리 데이터 추출
     const base64Content = base64Data.replace(/^data:image\/\w+;base64,/, "");
-    const imageBuffer = Buffer.from(base64Content, "base64");
+
+    // base64를 Blob으로 변환
+    const byteCharacters = atob(base64Content);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/png" });
 
     AWS.config.update({
       region: process.env.REACT_APP_AWS_REGION,
@@ -103,9 +111,8 @@ const PreviewPage = () => {
     const params = {
       Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
       Key: `pills/${fileName}`,
-      Body: imageBuffer,
+      Body: blob,
       ContentType: "image/png",
-      ContentEncoding: "base64",
     };
 
     try {
