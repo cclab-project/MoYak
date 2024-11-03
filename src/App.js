@@ -5,17 +5,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Home from "./pages/Main/Main";
 import Camera from "./pages/Camera/Camera";
-import Preview from './pages/Preview/Preview';
+import Preview from "./pages/Preview/Preview";
 import ChatRoom from "./pages/ChatRoom/ChatRoom";
 
-import Socket from './pages/Socket/Socket';
 import PyTest from "./pages/PyTest/PyTest";
 
-import GlobalStyle from './Globalstylel';
-import { Background, BackgroundWhite } from './components/Background/Background';
+import GlobalStyle from "./Globalstylel";
+import {
+  Background,
+  BackgroundWhite,
+} from "./components/Background/Background";
 
 //redirection
-import KakaoRedirection from "./pages/Redirection/KakaoRedirection/KakaoRedirection"
+import KakaoRedirection from "./pages/Redirection/KakaoRedirection/KakaoRedirection";
 
 function App() {
   function setScreenSize() {
@@ -27,15 +29,49 @@ function App() {
   });
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       <Router>
         <Routes>
-          <Route path="/" element={<BackgroundWhite><Login /></BackgroundWhite>}></Route>
-          <Route path="/home" element={<BackgroundWhite><Home /></BackgroundWhite>}></Route>
-          <Route path="/camera" element={<Background><Camera /></Background>}></Route>
-          <Route path="/preview" element={<Background><Preview /></Background>}></Route>
-          <Route path="/chatroom" element={<BackgroundWhite><ChatRoom /></BackgroundWhite>}></Route>
-          <Route path="/socket" element={<Socket />}></Route>
+          <Route
+            path="/"
+            element={
+              <BackgroundWhite>
+                <Login />
+              </BackgroundWhite>
+            }
+          ></Route>
+          <Route
+            path="/home"
+            element={
+              <BackgroundWhite>
+                <Home />
+              </BackgroundWhite>
+            }
+          ></Route>
+          <Route
+            path="/camera"
+            element={
+              <Background>
+                <Camera />
+              </Background>
+            }
+          ></Route>
+          <Route
+            path="/preview"
+            element={
+              <Background>
+                <Preview />
+              </Background>
+            }
+          ></Route>
+          <Route
+            path="/chatroom"
+            element={
+              <BackgroundWhite>
+                <ChatRoom />
+              </BackgroundWhite>
+            }
+          ></Route>
           <Route path="/pytest" element={<PyTest />}></Route>
 
           <Route exact path="/kakao/callback" element={<KakaoRedirection />} />

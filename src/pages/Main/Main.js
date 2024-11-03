@@ -23,17 +23,22 @@ const Main = () => {
   };
 
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      const userId = localStorage.getItem("userId");
+
       try {
+        setIsLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_SERVER_URL}/getData`
+          `${process.env.REACT_APP_SERVER_URL}/chat/list?userId=${userId}`
         );
         setData(response.data);
-        console.log(response.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -53,9 +58,11 @@ const Main = () => {
           <PlusImg />
           <Description>새로운 알약 검색</Description>
         </NewChat>
-        {data.map((item, index) => (
-          <ChatList key={index} item={item} />
-        ))}
+        {isLoading ? (
+          <div>로딩중입니다...</div>
+        ) : (
+          data.map((item, index) => <ChatList key={index} item={item} />)
+        )}
       </Body>
     </>
   );
