@@ -33,7 +33,7 @@ const ChatRoom = () => {
   const location = useLocation();
   const { responseData } = location.state || {};
   const [data, setData] = useState([]);
-
+  const [title, setTitle] = useState("");
   const [bodyHeight, setBodyHeight] = useState(window.innerHeight - 110);
 
   useEffect(() => {
@@ -67,7 +67,8 @@ const ChatRoom = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`
         );
-        setData(response.data);
+        setData(response.data.eachPills);
+        setTitle(response.data.title);
         setChatHistory(response.data.chatMessages);
       } catch (err) {
         console.log(err);
@@ -182,7 +183,7 @@ const ChatRoom = () => {
     <>
       <Header>
         <BackButton onClick={() => navigate("/home")} />
-        <HeaderTitle>{data.title}</HeaderTitle>
+        <HeaderTitle>{title}</HeaderTitle>
         <Dropdown
           menu={{ items, onClick: handleMenuClick }}
           trigger={["click"]}
@@ -196,7 +197,7 @@ const ChatRoom = () => {
         <LeftSpeechBubble>
           <MoyakImg />
           <TextBox>
-            {data.eachPills.map((list, index) => (
+            {data.map((list, index) => (
               <PillImgBox key={index}>
                 <PillImg src={list.image} alt="testImg" />
                 <PillName>
