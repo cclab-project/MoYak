@@ -8,12 +8,11 @@ import {
   IngredientItem,
   Date,
 } from "./style";
-import testImg from "../../assets/testImg.png";
 
 const ChatList = ({ item }) => {
   return (
     <ChatContainer>
-      <ImgBox src={testImg} alt="pillImg" />
+      <ImgBox src={item.allImage} alt="pillImg" />
       <DataBox>
         <Title>{item.title}</Title>
         <IngredientBox>
@@ -21,6 +20,7 @@ const ChatList = ({ item }) => {
             <IngredientItem key={index}>{pillName}</IngredientItem>
           ))}
         </IngredientBox>
+        <Date>{item.createDate}</Date>
       </DataBox>
     </ChatContainer>
   );

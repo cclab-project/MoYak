@@ -22,6 +22,12 @@ const Main = () => {
     navigate("/camera");
   };
 
+  const chatHandler = (chatId) => {
+    navigate("/chatroom", {
+      state: { responseData: chatId },
+    });
+  };
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -61,7 +67,9 @@ const Main = () => {
         {isLoading ? (
           <div>로딩중입니다...</div>
         ) : (
-          data.map((item, index) => <ChatList key={index} item={item} />)
+          data.map((item, index) => (
+            <ChatList key={index} item={item} onClick={chatHandler} />
+          ))
         )}
       </Body>
     </>
