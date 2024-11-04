@@ -19,6 +19,9 @@ export const DataBox = styled.div`
 `;
 
 export const Title = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin-top: 5px;
   margin-left: 10px;
   font-size: 18px;
