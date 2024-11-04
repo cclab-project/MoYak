@@ -73,7 +73,7 @@ export const InputContainer = styled.div`
 `;
 
 export const InputBox = styled.input`
-  width: 100%;
+  width: 80%;
   height: 24px;
   margin: 6px;
   margin-left: 10px;

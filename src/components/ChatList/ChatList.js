@@ -24,7 +24,7 @@ const ChatList = ({ item }) => {
       <DataBox>
         <Title>
           <div>{item.title}</div>
-          <Date>{item.createDate}</Date>
+          <Date>{item.createdAt}</Date>
         </Title>
         <IngredientBox>
           {item.pillName.map((pillName, index) => (

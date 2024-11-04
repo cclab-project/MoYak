@@ -67,7 +67,7 @@ const ChatRoom = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_SERVER_URL}/chat/${responseData}`
         );
-        setData(response.data.eachPills);
+        setData(response.data);
         setChatHistory(response.data.chatMessages);
       } catch (err) {
         console.log(err);
@@ -196,7 +196,7 @@ const ChatRoom = () => {
         <LeftSpeechBubble>
           <MoyakImg />
           <TextBox>
-            {data.map((list, index) => (
+            {data.eachPills.map((list, index) => (
               <PillImgBox key={index}>
                 <PillImg src={list.image} alt="testImg" />
                 <PillName>
