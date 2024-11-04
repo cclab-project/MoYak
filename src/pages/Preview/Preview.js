@@ -134,11 +134,13 @@ const PreviewPage = () => {
       );
 
       // 첫 번째 요청
+      const userId = localStorage.getItem("userId");
       const response_all = await axios.post(
         `${process.env.REACT_APP_SERVER_URL}/chat/create`,
         {
           all_image_url: allImageUrl,
           timeStamp: now.toLocaleTimeString(),
+          userId: userId,
         }
       );
       const chat_id = response_all.data;
