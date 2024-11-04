@@ -76,7 +76,7 @@ export const InputBox = styled.input`
   width: 80%;
   height: 24px;
   margin: 6px;
-  margin-left: 20px;
+  margin-left: 10px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #d9d9d9;
@@ -92,7 +92,7 @@ export const SendBox = styled.div`
   width: 32px;
   height: 32px;
   margin: 6px;
-  margin-right: 10px;
+  margin-right: 15px;
   background-color: white;
   border-radius: 5px;
   pointer-events: ${(props) => (props.$disabled ? "none" : "auto")};
