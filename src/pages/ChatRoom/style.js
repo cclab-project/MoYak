@@ -59,10 +59,10 @@ export const Bottom = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50px;
+  height: 60px;
   background-color: #d9d9d9;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const InputContainer = styled.div`
