@@ -27,10 +27,10 @@ export const LogoName = styled.span`
   font-family: var(--font-anboRegular);
 `;
 export const Body = styled.div`
-  width: 90%;
+  width: calc(90% + 3px);
   margin: auto;
   height: 90%;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 export const NewChat = styled.div`
