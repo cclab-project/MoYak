@@ -19,7 +19,7 @@ const ChatList = ({ item }) => {
     });
   };
   return (
-    <ChatContainer onClick={() => chatHandler(item.chatId)}>
+    <ChatContainer onClick={() => chatHandler(item.chat_id)}>
       <ImgBox src={item.allImage} alt="pillImg" />
       <DataBox>
         <Title>
