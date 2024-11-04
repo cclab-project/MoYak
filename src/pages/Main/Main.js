@@ -61,7 +61,9 @@ const Main = () => {
         {isLoading ? (
           <div>로딩중입니다...</div>
         ) : (
-          data.map((item, index) => <ChatList key={index} item={item} />)
+          [...data]
+            .reverse()
+            .map((item, index) => <ChatList key={index} item={item} />)
         )}
       </Body>
     </>
