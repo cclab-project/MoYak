@@ -20,10 +20,11 @@ export const DataBox = styled.div`
 
 export const Title = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   margin-top: 5px;
   margin-left: 10px;
+  margin-right: 10px;
   font-size: 18px;
 `;
 
@@ -50,6 +51,6 @@ export const IngredientItem = styled.span`
 
 export const Date = styled.div`
   margin-left: 10px;
-  font-size: 13px;
+  font-size: 12px;
   color: #808080;
 `;
