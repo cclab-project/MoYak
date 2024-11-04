@@ -31,6 +31,8 @@ export const Body = styled.div`
   margin: auto;
   height: 90%;
   overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 6px;
 `;
 
 export const NewChat = styled.div`
