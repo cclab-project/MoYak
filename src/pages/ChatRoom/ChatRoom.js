@@ -139,6 +139,7 @@ const ChatRoom = () => {
         }
       );
       alert("채팅 제목이 수정되었습니다.");
+      setTitle(isEditTitle);
     } catch (err) {
       console.log(err);
     } finally {
