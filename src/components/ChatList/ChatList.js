@@ -13,12 +13,13 @@ const ChatList = ({ item }) => {
   const navigate = useNavigate();
 
   const chatHandler = (chatId) => {
+    console.log(chatId);
     navigate("/chatroom", {
       state: { responseData: chatId },
     });
   };
   return (
-    <ChatContainer onClick={chatHandler}>
+    <ChatContainer onClick={() => chatHandler(item.chatId)}>
       <ImgBox src={item.allImage} alt="pillImg" />
       <DataBox>
         <Title>
